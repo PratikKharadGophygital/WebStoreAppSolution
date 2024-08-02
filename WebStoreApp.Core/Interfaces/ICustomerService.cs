@@ -5,6 +5,6 @@ namespace WebStoreApp.Application.Interfaces
 {
     public interface ICustomerService
     {
-        Task<IEnumerable<CustomerDto>> GetAllAsync();
+        Task<(IEnumerable<CustomerDto>, Int64 TotalCount)> GetAllAsync(BaseEntityDto baseEntityDto);
     }
 }

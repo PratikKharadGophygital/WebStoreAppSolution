@@ -4,12 +4,12 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WebStoreApp.Domain.Entities;
 
 namespace WebStoreApp.Application.DTO
 {
-    public class CustomerDto
+    public class CustomerDto : BaseEntityDto
     {
-        public Int64 Id { get; set; }
 
         [Required]
         [EmailAddress]
@@ -33,5 +33,7 @@ namespace WebStoreApp.Application.DTO
         [RegularExpression(@"^\+?\d{1,4}?[-.\s\(\)]*\d{1,15}$", ErrorMessage = "Invalid phone number")]
         [StringLength(100)]
         public string PhoneNumber { get; set; }
+
+        public IEnumerable<CustomerDto> listCustomers { get; set; }
     }
 }

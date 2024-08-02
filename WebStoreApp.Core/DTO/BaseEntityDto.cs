@@ -5,11 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WebStoreApp.Domain.Entities
+namespace WebStoreApp.Application.DTO
 {
-    public abstract class BaseEntity
+ 
+
+    public abstract class BaseEntityDto 
     {
-        public long Id { get; set; }
+        public Int64 Id { get; set; }
 
         public DateTime CreatedDate { get; set; } = DateTime.Now;
 
@@ -17,7 +19,6 @@ namespace WebStoreApp.Domain.Entities
 
         [Range(1, int.MaxValue, ErrorMessage = "Page number must be greater than 0.")]
         public Int64 CurrentPage { get; set; }
-
 
         [Range(1, int.MaxValue, ErrorMessage = "Page size must be greater than 0.")]
         public Int64 PageSize { get; set; } = 10;
@@ -32,6 +33,7 @@ namespace WebStoreApp.Domain.Entities
         public string SortColumn { get; set; } = "Id";
 
         public string SortDirection { get; set; } = "ASC";
+
 
 
     }

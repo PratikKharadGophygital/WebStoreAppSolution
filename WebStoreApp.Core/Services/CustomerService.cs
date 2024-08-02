@@ -2,22 +2,26 @@
 using WebStoreApp.Application.Interfaces;
 using WebStoreApp.Domain.Interfaces;
 
+
+
 namespace WebStoreApp.Application.Services
 {
     public class CustomerService : ICustomerService
     {
-        private readonly ICustomerService _customerService;
+        private readonly ICustomerRepository _customerRepository;
 
-        public CustomerService(ICustomerService customerService)
+        public CustomerService(ICustomerRepository customerRepository)
         {
-            _customerService = customerService;
+            _customerRepository = customerRepository;
         }
 
-        public async Task<IEnumerable<CustomerDto>> GetAllAsync()
+        public async Task<(IEnumerable<CustomerDto>, Int64 TotalCount)> GetAllAsync(BaseEntityDto baseEntityDto)
         {
             try
             {
-                var customer = await _customerService.GetAllAsync();
+               
+
+                var customer = await _customerRepository.GetAllAsync(baseEntityDto);
 
                 return customer.Select(c => new CustomerDto { Id = c.Id, FirstName = c.FirstName, LastName = c.LastName, Address = c.Address, DateOfBirth = c.DateOfBirth, Email = c.Email });
 
