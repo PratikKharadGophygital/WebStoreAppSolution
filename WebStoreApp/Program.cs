@@ -1,7 +1,17 @@
+using WebStoreApp.Extension;
+
 var builder = WebApplication.CreateBuilder(args);
+
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+//builder.Services.AddRazorPages();
+
+// Configure application services using the extension method
+builder.Services.AddApplicationServices(builder.Configuration);
+
 
 var app = builder.Build();
 
@@ -22,10 +32,7 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllers();
-});
+//app.MapRazorPages();
 
 app.MapControllerRoute(
     name: "default",
