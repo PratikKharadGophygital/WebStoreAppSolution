@@ -15,21 +15,13 @@
                     </div>
 
                     <div class="card-body">
-                        @* <form method="get">
-                            <div class="input-group mb-3">
-                                <input type="text" name="searchTerm" class="form-control" placeholder="Search" value="@Model.SearchTerm">
-                                <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary" type="submit">Search</button>
-                                </div>
-                            </div>
-                        </form> *@
                         <div class="d-flex justify-content-between mb-3">
                             <!-- Search Form -->
-                            <form method="get" class="d-flex flex-grow-1">
+                            <form id="searchForm" method="get" class="d-flex flex-grow-1">
                                 <div class="input-group">
-                                    <input type="text" name="searchTerm" class="form-control" placeholder="Search" value="@Model.SearchTerm">
+                                    <input type="text" id="searchTerm" name="searchTerm" class="form-control" placeholder="Search" value="@Model.SearchTerm">
                                     <div class="input-group-append">
-                                        <button class="btn btn-outline-secondary" type="submit">Search</button>
+                                        <button class="btn btn-outline-secondary" type="button" id="searchButton">Search</button>
                                     </div>
                                 </div>
                                 <button class="btn btn-outline-secondary ml-2" type="button" id="clearSearch">Clear</button>
@@ -39,65 +31,14 @@
                             <a href="@Url.Action("AddUser", "Customer")" class="btn btn-primary ml-3">Add Customer</a>
                         </div>
 
-
-                        
-                        
-                        
-                        <table id="userTable" class="table table-bordered table-striped">
-                            <thead>
-
-                                <tr>
-                                    <th>
-                                        <a asp-action="Index" asp-route-sortColumn="Id" asp-route-sortOrder="@((Model.SortOrder == "ASC") ? "DESC" : "ASC")">Id</a>
-                                    </th>
-                                    <th>
-                                        <a asp-action="Index" asp-route-sortColumn="FirstName" asp-route-sortOrder="@((Model.SortOrder == "ASC") ? "DESC" : "ASC")">First Name</a>
-                                    </th>
-                                    <th>
-                                        <a asp-action="Index" asp-route-sortColumn="LastName" asp-route-sortOrder="@((Model.SortOrder == "ASC") ? "DESC" : "ASC")">Last Name</a>
-                                    </th>
-                                    <th>
-                                        <a asp-action="Index" asp-route-sortColumn="Email" asp-route-sortOrder="@((Model.SortOrder == "ASC") ? "DESC" : "ASC")">Email</a>
-                                    </th>
-                                    <th>
-                                        <a asp-action="Index" asp-route-sortColumn="DateOfBirth" asp-route-sortOrder="@((Model.SortOrder == "ASC") ? "DESC" : "ASC")">Date of Birth</a>
-                                    </th>
-                                    <th>
-                                        <a asp-action="Index" asp-route-sortColumn="Action" asp-route-sortOrder="@((Model.SortOrder == "ASC") ? "DESC" : "ASC")">Action</a>
-                                    </th>
-                                </tr>
-
-                            </thead>
-                            <tbody>
-                                @foreach (var user in Model.Users)
-                                {
-                                    <tr>
-                                        <td>@user.Id</td>
-                                        <td>@user.FirstName</td>
-                                        <td>@user.LastName</td>
-                                        <td>@user.Email</td>
-                                        <td>@user.DateOfBirth.ToString("yyyy-MM-dd")</td>
-                                        <td><a href="@Url.Action("UpdateUser","Customer", new {id = user.Id})" class="btn btn-primary ml-3">Edit</a></td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                        <div>
-                            Showing @((Model.PageNumber - 1) * Model.PageSize + 1) to @(Model.PageNumber * Model.PageSize > Model.TotalRecords ? Model.TotalRecords : Model.PageNumber * Model.PageSize) of @Model.TotalRecords entries
+                        <div id="searchResults">
+                            @await Html.PartialAsync("_CustomerListPartial", Model)
                         </div>
-                        <nav>
-                            <ul class="pagination">
-                                @for (int i = 1; i <= Math.Ceiling((decimal)Model.TotalRecords / Model.PageSize); i++)
-                                {
-                                    <li class="page-item @(i == Model.PageNumber ? "active" : "")">
-                                        <a class="page-link" asp-action="Index" asp-route-pageNumber="@i" asp-route-pageSize="@Model.PageSize" asp-route-sortColumn="@Model.SortColumn" asp-route-sortOrder="@Model.SortOrder" asp-route-searchTerm="@Model.SearchTerm">@i</a>
-                                    </li>
-                                }
-                            </ul>
-                        </nav>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
+
+

@@ -13,7 +13,10 @@
 
     $('#customerForm').on('submit', function (event) {
         event.preventDefault();
-        if (!validateForm()) {
+        if (validateForm()) {
+            submitAddRequest();
+
+        } else {
             event.preventDefault();
         }
     });
@@ -25,6 +28,27 @@
             url: $('#customerUpdateForm').attr('action'),
             type: 'POST',
             data: $('#customerUpdateForm').serialize(),
+            success: function (response) {
+
+                if (response.success) {
+                    NotificationModule.showSuccess('Customer updated successfully. Click to go back to the list.', response.redirectUrl);
+                } else {
+                    NotificationModule.showError(response.message);
+                }
+            },
+            error: function () {
+                $('.alert').remove();
+                $('#notificationContainer').html('<div class="alert alert-danger">An error occurred while updating the user.</div>');
+            }
+        });
+    }
+
+    function submitAddRequest() {
+
+        $.ajax({
+            url: $('#customerForm').attr('action'),
+            type: 'POST',
+            data: $('#customerForm').serialize(),
             success: function (response) {
 
                 if (response.success) {

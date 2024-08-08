@@ -1,0 +1,36 @@
+﻿<table id="userTable" class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th class="sortable" data-sort-column="Id" data-sort-order="@Model.SortOrder">Id</th>
+            <th class="sortable" data-sort-column="FirstName" data-sort-order="@Model.SortOrder">First Name</th>
+            <th class="sortable" data-sort-column="LastName" data-sort-order="@Model.SortOrder">Last Name</th>
+            <th class="sortable" data-sort-column="Email" data-sort-order="@Model.SortOrder">Email</th>
+            <th class="sortable" data-sort-column="DateOfBirth" data-sort-order="@Model.SortOrder">Date of Birth</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model.Users)
+        {
+            <tr>
+                <td>@user.Id</td>
+                <td>@user.FirstName</td>
+                <td>@user.LastName</td>
+                <td>@user.Email</td>
+                <td>@user.DateOfBirth.ToString("yyyy-MM-dd")</td>
+                <td><a href="@Url.Action("UpdateUser", "Customer", new { id = user.Id })" class="btn btn-primary ml-3">Edit</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<nav>
+    <ul class="pagination">
+        @for (int i = 1; i <= Math.Ceiling((decimal)Model.TotalRecords / Model.PageSize); i++)
+        {
+            <li class="page-item @(i == Model.PageNumber ? "active" : "")">
+                <a class="page-link" href="javascript:void(0);" data-page-number="@i" data-page-size="@Model.PageSize" data-sort-column="@Model.SortColumn" data-sort-order="@Model.SortOrder" data-search-term="@Model.SearchTerm">@i</a>
+            </li>
+        }
+    </ul>
+</nav>

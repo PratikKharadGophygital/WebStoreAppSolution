@@ -36,7 +36,7 @@ namespace WebStoreApp.Domain.Entities
 
         public bool IsActive { get; set; }
 
-        public string Status { get; set; }
+        public string? Status { get; set; }
 
         
 
