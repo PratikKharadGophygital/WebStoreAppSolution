@@ -9,10 +9,8 @@ namespace WebStoreApp.Domain.Entities
 {
     public class Customer : BaseEntity
     {
-        public long Id { get; set; }
 
-        [StringLength(100)]
-        public string UserName { get; set; }
+        public string? UserName { get; set; }
 
         [Required]
         [EmailAddress]
@@ -26,7 +24,6 @@ namespace WebStoreApp.Domain.Entities
         [StringLength(100)]
         public string LastName { get; set; }
 
-        [Required]
         public DateOnly DateOfBirth { get; set; }
 
         [Required]
@@ -37,7 +34,11 @@ namespace WebStoreApp.Domain.Entities
         [StringLength(100)]
         public string PhoneNumber { get; set; }
 
+        public bool IsActive { get; set; }
 
+        public string Status { get; set; }
+
+        
 
     }
 }

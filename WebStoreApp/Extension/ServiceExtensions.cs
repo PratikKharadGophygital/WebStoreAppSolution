@@ -21,7 +21,9 @@ namespace WebStoreApp.Extension
 
             // Register database as service
             services.AddSingleton<DapperDbContext>();
-          
+         
+
+
             return services;
         }
     }

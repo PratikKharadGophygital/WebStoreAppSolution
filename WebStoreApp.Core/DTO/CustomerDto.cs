@@ -1,39 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WebStoreApp.Domain.Entities;
+﻿using WebStoreApp.Domain.Entities;
 
 namespace WebStoreApp.Application.DTO
 {
-    public class CustomerDto : BaseEntityDto
+    public class CustomerDto 
     {
 
-        [Required]
-        [EmailAddress]
-        public string Email { get; set; }
-
-        [Required]
-        [StringLength(100)]
-        public string FirstName { get; set; }
-
-        [Required]
-        [StringLength(100)]
-        public string LastName { get; set; }
-
-        [Required]
-        public DateOnly DateOfBirth { get; set; }
-
-        [Required]
-        public string Address { get; set; }
-
-        [Required]
-        [RegularExpression(@"^\+?\d{1,4}?[-.\s\(\)]*\d{1,15}$", ErrorMessage = "Invalid phone number")]
-        [StringLength(100)]
-        public string PhoneNumber { get; set; }
-
-        public IEnumerable<CustomerDto> listCustomers { get; set; }
+        public IEnumerable<Customer> Users { get; set; }
+        public int PageNumber { get; set; }
+        public int PageSize { get; set; }
+        public string SortColumn { get; set; }
+        public string SortOrder { get; set; }
+        public string SearchTerm { get; set; }
+        public int TotalRecords { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using WebStoreApp.Application.DTO;
 using WebStoreApp.Application.Interfaces;
+using WebStoreApp.Domain.Entities;
 using WebStoreApp.Domain.Interfaces;
 
 namespace WebStoreApp.Controllers
@@ -16,40 +17,111 @@ namespace WebStoreApp.Controllers
         }
 
 
-        public async Task<IActionResult> Index(BaseEntityDto baseEntityDto)
+        public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 10, string sortColumn = "FirstName", string sortOrder = "ASC", string searchTerm = "")
         {
-            if (baseEntityDto.PageNumber < 1) baseEntityDto.PageNumber = 1;
-
-            if (!new[] { "ASC","DESC"}.Contains(baseEntityDto.SortDirection.ToUpper()) )
+            if (searchTerm == null)
             {
-                baseEntityDto.SortDirection = "ASC";
+                searchTerm = "";
             }
 
-            CustomerDto model = new CustomerDto();            
+            if (string.IsNullOrWhiteSpace(sortColumn)) sortColumn = "FirstName";
+            if (string.IsNullOrWhiteSpace(sortOrder)) sortOrder = "ASC";
 
-            try
+            var result = await _customerService.GetPagedUsersAsync(pageNumber, pageSize, sortColumn, sortOrder, searchTerm);
+            var users = result.Users;
+            var totalRecords = result.TotalRecords;
+
+            var model = new CustomerDto
             {
-                var (customers, totalCount) = await _customerService.GetAllAsync(baseEntityDto);
-
-                model.listCustomers = customers;
-                model.TotalCount = totalCount;
-            }
-            catch (Exception ex)
-            {
-
-                return StatusCode(500, "An error occurred while fetching data.");
-            }         
+                Users = users,
+                PageNumber = pageNumber,
+                PageSize = pageSize,
+                SortColumn = sortColumn,
+                SortOrder = sortOrder,
+                SearchTerm = searchTerm,
+                TotalRecords = totalRecords
+            };
 
             return View(model);
         }
 
+        #region Customer create 
+        // Customer create 
         [HttpGet]
-        public async Task<IActionResult> GetAllAsync(BaseEntityDto baseEntityDto)
+        public IActionResult AddUser()
         {
-
-            var customer = await _customerService.GetAllAsync(baseEntityDto);
-            return Ok(customer);
+            
+            return View();
         }
 
+        // Action to handle form submission for addning a new customer 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddUser(Customer model)
+        {
+            if (ModelState.IsValid) 
+            { 
+                await _customerService.CreateUserAsync(model);
+                return RedirectToAction("Index");            
+            }
+
+            return View(model);
+        }
+
+        #endregion
+
+        #region Customer edit 
+
+        [HttpGet]
+        public async Task<IActionResult> UpdateUser(int id)
+        {
+            if(id <= 0)
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                var user = await _customerService.GetUserByIdAsync(id);
+
+                return View(user);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UpdateUser(CustomerUpdateDto model)
+        {
+            if (model.Id == 0)
+            {
+                return BadRequest();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                var error = ModelState.Values.SelectMany(v => v.Errors).Select(v => v.ErrorMessage).ToList();
+                return Json(new { sucess = false, message = string.Join(" ", error) });
+            }
+
+            var success = await _customerService.UpdateUserAsync(model);
+
+            if (success)
+            {
+                return Json(new { success = true, redirectUrl = Url.Action("Index", "Customer") });
+            }
+            else
+            {
+                return Json(new { success = false, message = "Failed to update user." });
+            }
+           
+        }
+        #endregion
     }
 }
