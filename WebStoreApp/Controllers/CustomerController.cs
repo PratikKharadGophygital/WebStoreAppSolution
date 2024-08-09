@@ -47,37 +47,6 @@ namespace WebStoreApp.Controllers
             return View(model);
         }
 
-
-        //public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 10, string sortColumn = "FirstName", string sortOrder = "ASC", string searchTerm = "")
-        //{
-        //    if (string.IsNullOrWhiteSpace(sortColumn)) sortColumn = "FirstName";
-        //    if (string.IsNullOrWhiteSpace(sortOrder)) sortOrder = "ASC";
-
-        //    var result = await _customerService.GetPagedUsersAsync(pageNumber, pageSize, sortColumn, sortOrder, searchTerm);
-        //    var users = result.Users;
-        //    var totalRecords = result.TotalRecords;
-
-        //    var model = new CustomerDto
-        //    {
-        //        Users = users,
-        //        PageNumber = pageNumber,
-        //        PageSize = pageSize,
-        //        SortColumn = sortColumn,
-        //        SortOrder = sortOrder,
-        //        SearchTerm = searchTerm,
-        //        TotalRecords = totalRecords
-        //    };
-
-        //    // Request is in-build method use
-        //    if (Request.IsAjaxRequest())
-        //    {
-        //        return PartialView("_CustomerListPartial", model);
-        //    }
-
-        //    return View(model);
-        //}
-
-
         #region Customer create 
         // Customer create 
         [HttpGet]
