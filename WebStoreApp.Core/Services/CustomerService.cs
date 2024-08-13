@@ -29,7 +29,7 @@ namespace WebStoreApp.Application.Services
 
                 throw;
             }
-        }
+        }   
 
         public async Task<(IEnumerable<Customer> Users, int TotalRecords)> GetPagedUsersAsync(int pageNumber, int pageSize, string sortColumn, string sortOrder, string searchTerm)
         {

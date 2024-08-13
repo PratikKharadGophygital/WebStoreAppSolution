@@ -13,6 +13,10 @@ namespace WebStoreApp.Extension
         {
             #region Add services to the container 
 
+
+            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IProductRepository, ProductRepository>();
+
             // Customer service 
             services.AddTransient<ICustomerService, CustomerService>();
             services.AddTransient<ICustomerRepository, CustomerRepository>();

@@ -242,6 +242,15 @@
                                 </p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a asp-area="" asp-controller="Product" asp-action="Index" class="nav-link">
+                                <i class="nav-icon fas fa-user"></i>
+                                <p>
+                                    Product
+                                    
+                                </p>
+                            </a>
+                        </li>
 
 
                     </ul>
@@ -307,8 +316,8 @@
 
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/common/notification.js" asp-append-version="true"></script>
-    <script src="~/js/common/pagination.js" asp-append-version="true"></script>
-
+   
+    <script src="~/js/common/paginationcommon.js" asp-append-version="true"></script>
 
 
     @await RenderSectionAsync("Scripts", required: false)

@@ -14,6 +14,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\js\common\paginationcommon.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\js\common\paginationcommon.js" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
     <ProjectReference Include="..\WebStoreApp.Core\WebStoreApp.Application.csproj" />
     <ProjectReference Include="..\WebStoreApp.Domain\WebStoreApp.Domain.csproj" />
@@ -21,6 +29,10 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\js\adminlte\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\js\common\paginationcommon.js" />
   </ItemGroup>
 
 </Project>

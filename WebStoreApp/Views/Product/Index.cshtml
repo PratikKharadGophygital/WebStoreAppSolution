@@ -1,1 +1,50 @@
-﻿
+﻿@using WebStoreApp.Application.DTO.Product
+@model ProductViewModel
+
+@{
+    ViewData["Title"] = "Product List";
+    var ajaxUrl = Url.Action("Index", "Product");
+}
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Product List</h3>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between mb-3">
+                            <!-- Search Form -->
+                            <form id="searchForm" method="get" class="d-flex flex-grow-1">
+                                <div class="input-group">
+                                    <input type="text" id="searchTerm" name="searchTerm" class="form-control searchTerm" placeholder="Search">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-secondary searchButton" type="button" data-section-id="productSection">Search</button>
+                                    </div>
+                                </div>
+                                <button class="btn btn-outline-secondary ml-2 clearSearch" type="button" data-section-id="productSection">Clear</button>
+                            </form>
+
+                            <!-- Add Product Button -->
+                            <a href="@Url.Action("AddProduct", "Product")" class="btn btn-primary ml-3">Add Product</a>
+                        </div>
+
+                        <div id="productSection">
+                            <div id="searchResults">
+                                @await Html.PartialAsync("_ProductListPartial", Model)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Pass the URL to JavaScript -->
+<script type="text/javascript">
+    var ajaxUrl = '@ajaxUrl';
+</script>

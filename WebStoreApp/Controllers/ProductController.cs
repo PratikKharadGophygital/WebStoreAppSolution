@@ -1,37 +1,86 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Data.SqlClient;
 using WebStoreApp.Application.DTO;
+using WebStoreApp.Application.DTO.Product;
+using WebStoreApp.Application.Interfaces;
+using WebStoreApp.Application.Services;
+using WebStoreApp.Domain.Entities;
 
 namespace WebStoreApp.Controllers
 {
     public class ProductController : Controller
     {
-
-        public ProductController()
+        private readonly IProductService _productService;
+        public ProductController(IProductService productService)
         {
-                
+            _productService = productService;
         }
 
-        public IActionResult Index(int pageNumber = 1, int pageSize = 10, string sortColumn = "FirstName", string sortOrder = "ASC", string searchTerm = "")
+        public async Task<IActionResult> Index(PaginationParameters parameters)
         {
-            if (string.IsNullOrWhiteSpace(sortColumn)) sortColumn = "FirstName";
-            if (string.IsNullOrWhiteSpace(sortOrder)) sortOrder = "ASC";
 
-            var result = await _customerService.GetPagedUsersAsync(pageNumber, pageSize, sortColumn, sortOrder, searchTerm);
-            var users = result.Users;
-            var totalRecords = result.TotalRecords;
-
-            var model = new CustomerDto
+            try
             {
-                Users = users,
-                PageNumber = pageNumber,
-                PageSize = pageSize,
-                SortColumn = sortColumn,
-                SortOrder = sortOrder,
-                SearchTerm = searchTerm,
-                TotalRecords = totalRecords
-            };
+                // Fetch paginated product data
+                var result = await _productService.GetPagedProductAsync(parameters);
+
+                var model = new ProductViewModel()
+                {
+                    Product = result.Items,
+                    TotalRecords = result.TotalRecords,
+                    Pagination = parameters
+                };
+
+                return View(model);
+            }
+            catch (Exception)
+            {
+                // Handle exceptions
+                return View("Error");
+            }
+        }
+
+        #region Product Create 
+        // Customer create 
+        [HttpGet]
+        public async Task<IActionResult> AddProduct()
+        {
+
+            return View();
+        }
+
+        // Action to handle form submission for addning a new customer 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddProduct(ProductAddDTO model)
+        {
+            if (ModelState.IsValid)
+            {
+                var success = await _productService.CreateProductAsync(model);
+
+                if (success > 0)
+                {
+                    return Json(new { success = true, redirectUrl = Url.Action("Index", "Product") });
+                }
+                else
+                {
+                    return Json(new { success = false, message = "Failed to update user." });
+                }
+            }
 
             return View(model);
         }
+
+        #endregion
+
+
+
+
+
+
+
+
+
+
     }
 }
