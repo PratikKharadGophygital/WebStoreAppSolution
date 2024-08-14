@@ -45,7 +45,7 @@ namespace WebStoreApp.Application.DTO.Product
 
         public DateTime UpdatedDate { get; set; } = DateTime.UtcNow;
 
-        public ProductUpdateDTO ConvertProductAddDTO(ProductEntity product)
+        public static ProductUpdateDTO ConvertProduct(ProductEntity product)
         {
 
             if (product == null)
@@ -54,6 +54,30 @@ namespace WebStoreApp.Application.DTO.Product
             }
 
             return new ProductUpdateDTO
+            {
+                ProductID = product.ProductID,
+                Name = product.Name,
+                Code = product.Code,
+                Price = product.Price,
+                Quantity = product.Quantity,
+                CouponCode = product.CouponCode,
+                CouponAmount = product.CouponAmount,
+                Description = product.Description,
+                StatusID = product.StatusID,
+                IsActive = product.IsActive,
+                UpdatedDate = product.UpdatedDate
+            };
+        }
+
+        public static ProductEntity ConvertProductUpdateDTO(ProductUpdateDTO product)
+        {
+
+            if (product == null)
+            {
+                throw new ArgumentNullException(nameof(product), "Product cannot be null");
+            }
+
+            return new ProductEntity
             {
                 ProductID = product.ProductID,
                 Name = product.Name,

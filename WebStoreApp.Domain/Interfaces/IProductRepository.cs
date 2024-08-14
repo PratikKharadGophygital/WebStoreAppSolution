@@ -12,5 +12,8 @@ namespace WebStoreApp.Domain.Interfaces
         Task<PaginatedResult<ProductEntity>> GetPagedProductAsync(int pageNumber, int pageSize, string sortColumn, string sortOrder, string searchTerm, CancellationToken cancellationToken = default);
 
         Task<int> CreateProductAsync(ProductEntity productAdd);
+
+        Task<ProductEntity> GetProductByIdAsync(int id);
+        Task<bool> UpdateProductAsync(ProductEntity model);
     }
 }

@@ -1,7 +1,7 @@
 ﻿$(document).ready(function () {
 
     // Bind from submit event
-    $('#customerUpdateForm').on('submit', function (event) {
+    $('#productUpdateForm').on('submit', function (event) {
         event.preventDefault();
         if (validateForm()) {
             submitEditRequest();
@@ -21,27 +21,57 @@
         }
     });
 
-    // Function to handle Ajax request 
-    function submitEditRequest() {
+    // Function to handle Ajax request
+    //function submitEditRequest() {
 
+    //    $.ajax({
+    //        url: $('#productUpdateForm').attr('action'),
+    //        type: 'POST',
+    //        data: $('#productUpdateForm').serialize(),
+    //        success: function (response) {
+
+    //            if (response.success) {
+    //                console.log('This is url redired request', response.redirectUrl);
+    //                NotificationModule.showSuccess('Product updated successfully. Click to go back to the list.', response.redirectUrl);
+
+    //            } else {
+    //                NotificationModule.showError(response.message);
+    //            }
+    //        },
+    //        error: function () {
+    //            $('.alert').remove();
+    //            $('#notificationContainer').html('<div class="alert alert-danger">An error occurred while updating the user.</div>');
+    //        }
+    //    });
+    //}
+
+    function submitEditRequest() {
         $.ajax({
-            url: $('#customerUpdateForm').attr('action'),
+            url: $('#productUpdateForm').attr('action'), // URL for the form submission
             type: 'POST',
-            data: $('#customerUpdateForm').serialize(),
+            data: $('#productUpdateForm').serialize(), // Serialize form data
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest', // This helps the server distinguish between AJAX and regular requests
+                'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val() // CSRF token
+            },
             success: function (response) {
 
                 if (response.success) {
-                    NotificationModule.showSuccess('Customer updated successfully. Click to go back to the list.', response.redirectUrl);
+                    NotificationModule.showSuccess('Product updated successfully. Click to go back to the list.', response.redirectUrl);
+
                 } else {
                     NotificationModule.showError(response.message);
                 }
             },
-            error: function () {
+            error: function (xhr, status, error) {
                 $('.alert').remove();
-                $('#notificationContainer').html('<div class="alert alert-danger">An error occurred while updating the user.</div>');
+                $('#notificationContainer').html(`<div class="alert alert-danger">An error occurred: ${xhr.responseText || error}</div>`);
             }
         });
     }
+
+
 
     function submitAddRequest() {
 

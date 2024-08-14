@@ -47,22 +47,23 @@ namespace WebStoreApp.Application.Services
 
         public async Task<CustomerUpdateDto> GetUserByIdAsync(int id)
         {
-            CustomerUpdateDto customerUpdateDto = new CustomerUpdateDto();
 
             var result = await _customerRepository.GetUserByIdAsync(id);
 
             if (result is not null)
             {
-                customerUpdateDto = customerUpdateDto.ConvertToCustomerUpdateDto(result);
+                var data = CustomerUpdateDto.ConvertToCustomerUpdateDto(result);
+
+                return data;
             }
 
 
-            return customerUpdateDto;
+            return null;
         }
 
         public async Task<bool> UpdateUserAsync(CustomerUpdateDto customerUpdateDto)
         {
-            var data = customerUpdateDto.ConvertToCustomer(customerUpdateDto);
+            var data = CustomerUpdateDto.ConvertToCustomer(customerUpdateDto);
 
             var result = await _customerRepository.UpdateUserAsync(data);
 

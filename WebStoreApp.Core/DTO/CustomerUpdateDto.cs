@@ -33,7 +33,7 @@ namespace WebStoreApp.Application.DTO
         [StringLength(20, ErrorMessage = "Phone Number cannot be longer than 20 characters")]
         public string PhoneNumber { get; set; }
 
-        public CustomerUpdateDto ConvertToCustomerUpdateDto(Customer customer)
+        public static CustomerUpdateDto ConvertToCustomerUpdateDto(Customer customer)
         {
 
             if (customer == null)
@@ -55,7 +55,7 @@ namespace WebStoreApp.Application.DTO
             return dto;
         }
 
-        public Customer ConvertToCustomer(CustomerUpdateDto customerUpdatedto)
+        public static Customer ConvertToCustomer(CustomerUpdateDto customerUpdatedto)
         {
 
             if (customerUpdatedto == null)

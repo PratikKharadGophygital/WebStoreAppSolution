@@ -89,6 +89,68 @@ namespace Infrastructure.Repositories
             }
         }
 
+        public async Task<ProductEntity> GetProductByIdAsync(int id)
+        {
+            using (var connection = _dbConnection.CreateConnection())
+            {
+                var parameters = new DynamicParameters();
+                parameters.Add("@ProductID", id);
+
+                try
+                {
+
+                    var result = await connection.QuerySingleOrDefaultAsync<ProductEntity>(
+                        "usp_GetRecordByProductId",
+                        parameters,
+                        commandType: CommandType.StoredProcedure
+
+                    );
+
+                    return result; // Return the result directly
+                }
+                catch (SqlException sqlEx)
+                {
+                    throw new ApplicationException("An error occurred while retrieving the product. Please try again later.", sqlEx);
+                }
+                catch (Exception ex)
+                {
+
+                    throw new ApplicationException("An unexpected error occurred. Please try again later.", ex);
+                }
+            }
+        }
+
+        public async Task<bool> UpdateProductAsync(ProductEntity model)
+        {
+            using (var connection = _dbConnection.CreateConnection())
+            {
+                var parameters = new DynamicParameters();
+                parameters.Add("@ProductID", model.ProductID);
+                parameters.Add("@Name", model.Name);
+                parameters.Add("@Code", model.Code);
+                parameters.Add("@Price", model.Price);
+                parameters.Add("@Quantity", model.Quantity);
+                parameters.Add("@CouponCode", model.CouponCode);
+                parameters.Add("@CouponAmount", model.CouponAmount);
+
+                try
+                {
+                    var result = await connection.ExecuteScalarAsync<string>("usp_UpdateProduct", parameters, commandType: CommandType.StoredProcedure);
+
+                    if (result == "Success")
+                    {
+                        return true;
+                    }
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
+
+            return false;
+        }
 
 
 

@@ -28,6 +28,11 @@
             url: $('#customerUpdateForm').attr('action'),
             type: 'POST',
             data: $('#customerUpdateForm').serialize(),
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest', // This helps the server distinguish between AJAX and regular requests
+                'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val() // CSRF token
+            },
             success: function (response) {
 
                 if (response.success) {

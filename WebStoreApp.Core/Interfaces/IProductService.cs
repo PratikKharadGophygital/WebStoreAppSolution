@@ -13,5 +13,7 @@ namespace WebStoreApp.Application.Interfaces
     {
         Task<PaginatedResult<ProductDTO>> GetPagedProductAsync(PaginationParameters parameters);
         Task<int> CreateProductAsync(ProductAddDTO productAdd);
+        Task<ProductUpdateDTO> GetProductByIdAsync(int id);
+        Task<bool> UpdateProductAsync(ProductUpdateDTO model);
     }
 }

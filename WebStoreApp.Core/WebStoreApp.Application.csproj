@@ -14,4 +14,8 @@
     <ProjectReference Include="..\WebStoreApp.Domain\WebStoreApp.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DTO\Dashboard\" />
+  </ItemGroup>
+
 </Project>

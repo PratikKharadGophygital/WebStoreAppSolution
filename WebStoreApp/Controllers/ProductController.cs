@@ -73,6 +73,71 @@ namespace WebStoreApp.Controllers
 
         #endregion
 
+        #region Proudct Update 
+
+        [HttpGet]
+        public async Task<IActionResult> EditProduct(int id)
+        {
+            if (id <= 0)
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                var user = await _productService.GetProductByIdAsync(id);
+
+                return View(user);
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditProduct(ProductUpdateDTO model)
+        {
+            if (model.ProductID == 0)
+            {
+                return Json(new { success = false, message = "Invalid Product ID." });
+            }
+
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.Values.SelectMany(v => v.Errors)
+                                              .Select(e => e.ErrorMessage)
+                                              .ToList();
+                return Json(new { success = false, message = string.Join(" ", errors) });
+            }
+
+            try
+            {
+                var success = await _productService.UpdateProductAsync(model);
+                if (success)
+                {
+
+                    return Json(new { success = true, redirectUrl = Url.Action("Index", "Product") });
+
+
+                }
+                else
+                {
+                    return Json(new { success = false, message = "Failed to update the product. Please try again later." });
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log the exception (use your preferred logging method)
+                return Json(new { success = false, message = "An error occurred while updating the product: " + ex.Message });
+            }
+        }
+
+
+        #endregion
+
 
 
 

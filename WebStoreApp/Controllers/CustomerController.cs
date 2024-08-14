@@ -103,8 +103,6 @@ namespace WebStoreApp.Controllers
             }
         }
 
-
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> UpdateUser(CustomerUpdateDto model)

@@ -12,16 +12,17 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Product)
+        @foreach (var item in Model.Product)        
         {
             <tr>
                 <td>@item.ProductID</td>
                 <td>@item.Name</td>
                 <td>@item.Price</td>
                 <td>@item.Quantity</td>
+                <td>@item.CouponCode</td>
                 <td>@item.StatusID</td>
                 <td>
-                    <a href="@Url.Action("UpdateProduct", "Product", new { id = item.ProductID })" class="btn btn-primary ml-3">Edit</a>
+                    <a href="@Url.Action("EditProduct", "Product", new { id = item.ProductID })" class="btn btn-primary ml-3">Edit</a>
                 </td>
             </tr>
         }

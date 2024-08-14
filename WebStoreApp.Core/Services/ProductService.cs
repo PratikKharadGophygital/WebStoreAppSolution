@@ -14,7 +14,7 @@ namespace WebStoreApp.Application.Services
             _repository = repository;
         }
 
-       
+
         public async Task<int> CreateProductAsync(ProductAddDTO productAdd)
         {
 
@@ -33,9 +33,9 @@ namespace WebStoreApp.Application.Services
             string sortOrder = parameters.SortOrder == SortOrder.Ascending ? "ASC" : "DESC";
 
             try
-            {         
-                
-                var result =  await _repository.GetPagedProductAsync(
+            {
+
+                var result = await _repository.GetPagedProductAsync(
                 parameters.PageNumber,
                 parameters.PageSize,
                 parameters.SortColumn,
@@ -57,6 +57,34 @@ namespace WebStoreApp.Application.Services
 
                 throw;
             }
+        }
+
+        public async Task<ProductUpdateDTO> GetProductByIdAsync(int id)
+        {
+
+
+            var result = await _repository.GetProductByIdAsync(id);
+
+            if (result is not null)
+            {
+                var data = ProductUpdateDTO.ConvertProduct(result);
+
+                return data;
+            }
+
+
+            return null;
+        }
+
+        public async Task<bool> UpdateProductAsync(ProductUpdateDTO model)
+        {
+            var data = ProductUpdateDTO.ConvertProductUpdateDTO(model);
+
+            var result = await _repository.UpdateProductAsync(data);
+
+            return result;
+
+
         }
 
 
