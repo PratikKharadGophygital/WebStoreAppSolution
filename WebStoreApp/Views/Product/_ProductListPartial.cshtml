@@ -7,7 +7,8 @@
             <th class="sortable" data-sort-column="Name" data-sort-order="@Model.Pagination.SortOrder">Name</th>
             <th class="sortable" data-sort-column="Price" data-sort-order="@Model.Pagination.SortOrder">Price</th>
             <th class="sortable" data-sort-column="Quantity" data-sort-order="@Model.Pagination.SortOrder">Quantity</th>
-            <th class="sortable" data-sort-column="StatusID" data-sort-order="@Model.Pagination.SortOrder">Status</th>
+            <th class="sortable" data-sort-column="CouponCode" data-sort-order="@Model.Pagination.SortOrder">Coupon Code</th>
+            <th class="sortable" data-sort-column="IsActive" data-sort-order="@Model.Pagination.SortOrder">IsActive</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -20,7 +21,16 @@
                 <td>@item.Price</td>
                 <td>@item.Quantity</td>
                 <td>@item.CouponCode</td>
-                <td>@item.StatusID</td>
+
+                @if (item.IsActive == 1)
+                {
+                    <td> <span class="badge badge-success">Active</span></td>                       
+                }
+                else
+                {
+                    <td><span class="badge badge-secondary">Inactive</span></td>
+                }
+
                 <td>
                     <a href="@Url.Action("EditProduct", "Product", new { id = item.ProductID })" class="btn btn-primary ml-3">Edit</a>
                 </td>
@@ -30,12 +40,27 @@
 </table>
 
 <nav>
-    <ul class="pagination">
+@*     <ul class="pagination">
         @for (int i = 1; i <= Math.Ceiling((decimal)Model.TotalRecords / Model.Pagination.PageSize); i++)
         {
             <li class="page-item @(i == Model.Pagination.PageNumber ? "active" : "")">
                 <a class="page-link" href="javascript:void(0);" data-section-id="productsSection" data-page-number="@i" data-page-size="@Model.Pagination.PageSize" data-sort-column="@Model.Pagination.SortColumn" data-sort-order="@Model.Pagination.SortOrder" data-search-term="@Model.Pagination.SearchTerm">@i</a>
             </li>
         }
+    </ul> *@
+    <ul class="pagination">
+        @for (int i = 1; i <= Math.Ceiling((decimal)Model.TotalRecords / Model.Pagination.PageSize); i++)
+        {
+            <li class="page-item @(i == Model.Pagination.PageNumber ? "active" : "")">
+                <a class="page-link" href="javascript:void(0);"
+                   data-section-id="productsSection"
+                   data-page-number="@i"
+                   data-page-size="@Model.Pagination.PageSize"
+                   data-sort-column="@Model.Pagination.SortColumn"
+                   data-sort-order="@Model.Pagination.SortOrder"
+                   data-search-term="@Model.Pagination.SearchTerm">@i</a>
+            </li>
+        }
     </ul>
+
 </nav>

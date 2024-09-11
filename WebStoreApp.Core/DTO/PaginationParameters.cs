@@ -11,15 +11,18 @@ namespace WebStoreApp.Application.DTO
         public int PageNumber { get; set; } = 1;
         public int PageSize { get; set; } = 10;
         public string SortColumn { get; set; }
-        public SortOrder SortOrder { get; set; }
-        public string SearchTerm { get; set; }
-        
+        public SortOrder SortOrder { get; set; }         
+        public string? SearchTerm { get; set; }
+
+       
+
     }
     public enum SortOrder
     {
         Ascending,
         Descending
     }
+
 
 
 }

@@ -19,8 +19,10 @@ namespace WebStoreApp.Controllers
         public async Task<IActionResult> Index(PaginationParameters parameters)
         {
 
+
             try
             {
+                
                 // Fetch paginated product data
                 var result = await _productService.GetPagedProductAsync(parameters);
 

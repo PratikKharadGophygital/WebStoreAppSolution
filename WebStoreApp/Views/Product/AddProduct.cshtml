@@ -5,6 +5,78 @@
 }
 
 <h2>@ViewData["Title"]</h2>
+
+<div id="notificationContainer"></div>
+
+<form id="productForm" asp-action="AddProduct" method="post">
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="Name">Product Name</label>
+                <input type="text" id="Name" name="Name" class="form-control" placeholder="Enter product name" />
+                <span id="NameError" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="Code">Product Code</label>
+                <input type="text" id="Code" name="Code" class="form-control" placeholder="Enter product code" />
+                <span id="CodeError" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="Price">Price</label>
+                <input type="number" id="Price" name="Price" class="form-control" placeholder="Enter price" />
+                <span id="PriceError" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="Quantity">Quantity</label>
+                <input type="number" id="Quantity" name="Quantity" class="form-control" placeholder="Enter quantity" />
+                <span id="QuantityError" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="CouponCode">Coupon Code</label>
+        <input type="text" id="CouponCode" name="CouponCode" class="form-control" placeholder="Enter coupon code" />
+        <span id="CouponCodeError" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="CouponAmount">Coupon Amount</label>
+        <input type="number" id="CouponAmount" name="CouponAmount" class="form-control" placeholder="Enter coupon amount" />
+        <span id="CouponAmountError" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a href="@Url.Action("Index", "Product")" class="btn btn-secondary">Cancel</a>
+    </div>
+</form>
+
+@section Scripts {
+    <script src="~/js/validation/productvalidation.js"></script>
+}
+
+
+@*     @model ProductAddDTO
+
+@{
+    ViewData["Title"] = "Add New Product";
+}
+
+<h2>@ViewData["Title"]</h2>
 <div id="notificationContainer"></div>
 <form id="productForm" asp-action="AddProduct" method="post">
     @Html.AntiForgeryToken()
@@ -53,3 +125,4 @@
 @section Scripts {
     <script src="~/js/validation/productvalidation.js"></script>
 }
+ *@

@@ -12,26 +12,19 @@ namespace WebStoreApp.Application.DTO.Product
     {
         public int ProductID { get; set; }
 
-
         public string Name { get; set; } = string.Empty;
-
 
         public string Code { get; set; }
 
         public decimal Price { get; set; }
 
-
         public int Quantity { get; set; }
-
 
         public string? CouponCode { get; set; }
 
-
         public decimal CouponAmount { get; set; }
 
-
         public string? Description { get; set; }
-
 
         public ProductStatus StatusID { get; set; } = ProductStatus.Active;
 
